@@ -29,6 +29,7 @@ export type SceneProps = {
   /* setPin */
   pin?: boolean | PinSettings,
 
+  onChange?: Function,
 }
 
 export type SceneBaseProps = SceneProps & {
@@ -197,7 +198,7 @@ class SceneBase extends React.PureComponent<SceneBaseProps, SceneBaseState> {
   }
 
   initEventHandlers() {
-    let { children } = this.props;
+    let { children, onChange } = this.props;
 
     if (typeof children !== 'function' && !isGSAP(callChildFunction(children, 0, 'init'))) {
       return;
@@ -214,6 +215,12 @@ class SceneBase extends React.PureComponent<SceneBaseProps, SceneBaseState> {
         progress: event.progress
       });
     });
+
+    if (onChange) {
+      this.scene.on('change', (event) => {
+        onChange(event)
+      });
+    }
   }
 
   render() {

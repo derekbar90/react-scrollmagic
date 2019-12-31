@@ -3776,7 +3776,9 @@ var SceneBase = function (_React$PureComponent) {
     value: function initEventHandlers() {
       var _this2 = this;
 
-      var children = this.props.children;
+      var _props3 = this.props,
+          children = _props3.children,
+          onChange = _props3.onChange;
 
 
       if (typeof children !== 'function' && !isGSAP(callChildFunction(children, 0, 'init'))) {
@@ -3794,6 +3796,12 @@ var SceneBase = function (_React$PureComponent) {
           progress: event.progress
         });
       });
+
+      if (onChange) {
+        this.scene.on('change', function (event) {
+          onChange(event);
+        });
+      }
     }
   }, {
     key: 'render',
