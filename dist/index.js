@@ -3681,6 +3681,7 @@ var SceneBase = function (_React$PureComponent) {
   createClass(SceneBase, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      console.log('sceneParams', sceneParams);
       var _props = this.props,
           children = _props.children,
           controller = _props.controller,
@@ -3695,7 +3696,11 @@ var SceneBase = function (_React$PureComponent) {
       var element = this.ref;
       sceneParams.triggerElement = sceneParams.triggerElement === null ? null : sceneParams.triggerElement || element;
 
-      this.scene = new ScrollMagic.Scene(sceneParams);
+      this.scene = new ScrollMagic.Scene({
+        triggerHook: sceneParams.triggerHook,
+        duration: sceneParams.duration,
+        triggerElement: sceneParams.triggerElement
+      });
 
       this.initEventHandlers();
 
@@ -3795,13 +3800,8 @@ var SceneBase = function (_React$PureComponent) {
         _this2.setState({
           progress: event.progress
         });
+        onChange && onChange(event);
       });
-
-      if (onChange) {
-        this.scene.on('change', function (event) {
-          onChange(event);
-        });
-      }
     }
   }, {
     key: 'render',

@@ -55,6 +55,7 @@ const Sticky2 = () => (
         triggerHook="onLeave"
         duration={1000}
         pin
+        onChange={(e) => console.log(e)}
       >
         {(progress) => (
           <div className="sticky">

@@ -121,7 +121,11 @@ class SceneBase extends React.PureComponent<SceneBaseProps, SceneBaseState> {
     const element = this.ref;
     sceneParams.triggerElement = sceneParams.triggerElement === null ? null : sceneParams.triggerElement || element;
 
-    this.scene = new ScrollMagic.Scene(sceneParams);
+    this.scene = new ScrollMagic.Scene({
+      triggerHook: sceneParams.triggerHook,
+      duration: sceneParams.duration,
+      triggerElement: sceneParams.triggerElement
+    });
 
     this.initEventHandlers();
 
@@ -214,13 +218,8 @@ class SceneBase extends React.PureComponent<SceneBaseProps, SceneBaseState> {
       this.setState({
         progress: event.progress
       });
+      onChange && onChange(event)
     });
-
-    if (onChange) {
-      this.scene.on('change', (event) => {
-        onChange(event)
-      });
-    }
   }
 
   render() {
